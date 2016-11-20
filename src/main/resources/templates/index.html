@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+</link>
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous">
+</link>
+
+<title>Home Page</title>
+</head>
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div>
+					<h1>Search Form</h1>
+					<form method="post" action="index" class="form">
+						<input type="text" name="tinNo" placeholder="Tin No."
+							class="form-control" style="width: 300px;" /> <input
+							type="submit" value="Submit" class="btn btn-primary"
+							style="margin-top: 10px;" />
+					</form>
+				</div>
+				<div th:if="${null != invalidTin and invalidTin}">
+					<h2>Empty or Invalid Tin</h2>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row" style="padding-top: 20px;">
+			<div class="col-md-12">
+				<div th:unless="${null != invalidTin and invalidTin}">
+
+					<div th:if="${results != null and #bools.isTrue(results)}">
+
+						<table style="border: 1px;" class="table table-striped">
+							<tr>
+								<th>Sr.No</th>
+								<th>Old RC No</th>
+								<th>TIN No</th>
+								<th>Dealer Name</th>
+								<th>Status</th>
+							</tr>
+							<tr th:each="tinDetails,iterationStatus  : ${tinDetailsList}">
+								<td th:text="${iterationStatus.count}">1</td>
+								<td th:text="${tinDetails.oldRcNo}">001</td>
+								<td th:text="${tinDetails.tinNo}">Tin Number</td>
+								<td th:text="${tinDetails.dealerName}">Dealer Name</td>
+								<td th:text="${tinDetails.status}">Status</td>
+							</tr>
+						</table>
+					</div>
+					<div th:if="${results != null and #bools.isFalse(results)}">
+						<h2>No Results</h2>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
